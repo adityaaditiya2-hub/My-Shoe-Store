@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - Kicks</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Top Utility Bar -->
+    <div class="top-bar">
+        <div id="top-bar-auth">
+            <a href="#">Help</a>
+            <a href="login.html">Log In</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="main-header" id="main-header">
+        <div class="logo-area" style="font-size: 24px; font-weight: 800; font-style: italic; letter-spacing: -1px;">
+            <a href="index.html" style="color: black; text-decoration: none;">
+                KICKS SHOES
+            </a>
+        </div>
+        <nav class="nav-center">
+            <a href="index.html">Shop</a>
+        </nav>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="location.href='wishlist.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button class="icon-btn" onclick="location.href='cart.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="badge-count" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 32px;">Favourites</h1>
+        
+        <div id="wishlist-grid" class="grid">
+            <p style="text-align: center; grid-column: 1/-1;">Loading wishlist...</p>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (!currentUser) return; // app.js checkAuth handles redirect
+                renderWishlistPage();
+            }, 500);
+        });
+
+        async function renderWishlistPage() {
+            await fetchWishlist();
+            const container = document.getElementById('wishlist-grid');
+            
+            if (wishlist.length === 0) {
+                container.innerHTML = '<p style="grid-column:1/-1; color:var(--text-secondary);">Items added to your Favourites will be saved here.</p>';
+                return;
+            }
+
+            container.innerHTML = wishlist.map(p => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${p.image_url}" alt="${p.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3>${p.name}</h3>
+                            <p>${p.type.charAt(0).toUpperCase() + p.type.slice(1)} Shoe</p>
+                        </div>
+                        <div class="product-price">₹${p.price}</div>
+                    </div>
+                    <div style="margin-top: 16px; display:flex; gap:8px">
+                        <button class="btn btn-outline" style="flex:1; padding:10px;" onclick="addToCart(${p.id})">Add to Bag</button>
+                        <button class="btn" style="padding:10px 16px; background:var(--bg-secondary); color:var(--text-primary); border-color:var(--bg-secondary);" onclick="removeFromWishlist(${p.wishlist_id})">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function removeFromWishlist(wishlistId) {
+            try {
+                const res = await fetch(`${API_URL}/wishlist.php?id=${wishlistId}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('Removed from Favourites');
+                    renderWishlistPage();
+                }
+            } catch (e) {
+                showToast('Failed to remove', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

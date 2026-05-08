@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike Clone - Just Do It</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Top Utility Bar -->
+    <div class="top-bar">
+        <div id="top-bar-auth">
+            <a href="#">Help</a>
+            <a href="register.html">Sign Up</a>
+            <a href="login.html">Log In</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="main-header" id="main-header">
+        <div class="logo-area" style="font-size: 24px; font-weight: 800; font-style: italic; letter-spacing: -1px;">
+            <a href="index.html" style="color: black; text-decoration: none;">
+                KICKS SHOES
+            </a>
+        </div>
+        
+        <nav class="nav-center">
+            <a href="#" onclick="fetchProducts(); return false;">New & Featured</a>
+            <a href="#" onclick="setFilter('type', 'sports'); return false;">Men</a>
+            <a href="#" onclick="setFilter('type', 'casual'); return false;">Women</a>
+            <a href="#" onclick="setFilter('type', 'sneakers'); return false;">Kids</a>
+            <a href="#" onclick="setFilter('brand_id', '1'); return false;">Jordan</a>
+            <a href="#" onclick="setFilter('max_price', '90'); return false;">Sale</a>
+        </nav>
+
+        <div class="nav-right">
+            <div class="search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search" onkeyup="if(event.key==='Enter') setFilter('name', this.value)">
+            </div>
+            
+            <button class="icon-btn" onclick="location.href='wishlist.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            
+            <button class="icon-btn" onclick="location.href='cart.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="badge-count" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Promo Banner -->
+    <div class="promo-banner">
+        Enjoy 10% Off On The App. Use: APP10
+    </div>
+
+    <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <h1 style="font-size:24px; font-weight:500;">New Arrivals</h1>
+            <div style="font-size:14px; color:var(--text-secondary)">Hide Filters &nbsp; | &nbsp; Sort By</div>
+        </div>
+
+        <div id="products-grid" class="grid">
+            <p style="text-align: center; grid-column: 1/-1;">Loading products...</p>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if(window.scrollY > 10) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchProducts();
+        });
+    </script>
+</body>
+</html>

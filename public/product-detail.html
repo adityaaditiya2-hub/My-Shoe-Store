@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Shoe Store</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">ShoeStore</a>
+            <ul class="nav-links">
+                <!-- Links injected by JS -->
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="display: flex; gap: 40px; background: white; padding: 20px; border-radius: 8px;">
+            <div style="flex: 1;">
+                <img id="product-img" src="" alt="Product" style="width: 100%; max-height: 400px; object-fit: contain;">
+            </div>
+            <div style="flex: 1;">
+                <h2 id="product-title" style="margin-bottom: 0.5rem;"></h2>
+                <h4 id="product-brand" style="color: #666; margin-bottom: 1rem;"></h4>
+                <p id="product-price"
+                    style="font-size: 1.5rem; color: var(--accent-color); font-weight: bold; margin-bottom: 1rem;"></p>
+                <p id="product-desc" style="margin-bottom: 2rem;"></p>
+                <button id="add-to-cart-btn" class="btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

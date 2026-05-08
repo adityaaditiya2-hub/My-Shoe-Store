@@ -1,0 +1,9 @@
+# Windows PHP Runtime
+/php/
+
+# Session storage
+/sessions/
+session.log
+
+# Database
+/database/database.sqlite

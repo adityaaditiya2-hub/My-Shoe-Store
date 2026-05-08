@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us - Kicks</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-image" style="background-image: url('https://images.unsplash.com/photo-1552346154-21d32810baa3?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="auth-form-container">
+            <div class="auth-logo" style="font-size: 36px; font-weight: 800; font-style: italic; letter-spacing: -2px;">
+                KICKS SHOES
+            </div>
+            <h1>BECOME A KICKS MEMBER</h1>
+            <p>Create your Kicks Member profile and get first access to the very best of Kicks products, inspiration and community.</p>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="username" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" id="email" placeholder="Email address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="password" placeholder="Password" required>
+                </div>
+                
+                <p style="text-align:center; margin-bottom: 24px; font-size:14px; color:var(--text-secondary)">
+                    By creating an account, you agree to Kicks' <a href="#" style="text-decoration:underline; color:var(--text-primary)">Privacy Policy</a> and <a href="#" style="text-decoration:underline; color:var(--text-primary)">Terms of Use</a>.
+                </p>
+                
+                <button type="submit" class="btn" style="width:100%; border-radius:4px; padding:16px;">JOIN US</button>
+            </form>
+            
+            <p style="text-align:center; margin-top:24px; font-size:14px; color:var(--text-secondary)">
+                Already a Member? <a href="login.html" style="color:var(--text-primary); text-decoration:underline;">Sign In.</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch(`${API_URL}/auth.php?action=register`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    credentials: 'include',
+                    body: JSON.stringify({username, email, password})
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showToast('Registration successful!');
+                    setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+                } else {
+                    showToast(data.message, 'error');
+                }
+            } catch (err) {
+                showToast('An error occurred.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
