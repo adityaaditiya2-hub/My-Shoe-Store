@@ -15,4 +15,5 @@ RUN mkdir -p /var/www/html/sessions /var/www/html/database
 RUN chown -R www-data:www-data /var/www/html/sessions /var/www/html/database
 RUN chmod -R 777 /var/www/html/sessions /var/www/html/database
 
-EXPOSE 80
+# IMPORTANT: Configure Apache to listen on the dynamic PORT assigned by Railway instead of default 80
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
